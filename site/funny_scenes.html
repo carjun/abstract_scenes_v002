@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>AMT: Funny Scenarios</title>
+        <style type="text/css">
+            .xlink {
+                cursor: default;
+            }
+
+            .hlink {
+                cursor: help;
+            }
+            
+            .topBar {        
+                display: inline;
+                font-size: 1.5em;
+                margin-before: 0.83em;
+                margin-after: 0.83em;
+                margin-start: 0;
+                margin-end: 0;
+                font-weight: bold;
+            }
+
+            .buttonHolder {
+                text-align: center;
+                vertical-align: top;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+        <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+        
+        <!--The "head" JS extracts information from the URL that is going to be needed
+        to set up the HIT early. (This gets loaded before the body.)-->
+        <script src="./funny_scenes_head.js"></script>
+    </head>
+    <body class="noSelect">
+    
+        <div class="noSelect" align="left">
+            <h2 style="color:black; margin:0 0 0 0;">Depict Funny Scenarios!
+            </h2>
+        </div>
+    
+        <div class="noSelect" align="left" style="width: 1120px; padding-left: 0px; margin: 0;">
+            <br/>
+
+            <div class="noSelect" id='examples'>
+                <div class="noSelect" id='instructions' align="left" style="color:black;">
+                    <p style="margin: 5px 0 0 0;">
+                        [Images may take some time to load]
+                        <b>[Spamming will get blocked]</b> <br />
+                        <p>
+                        Using the clipart interface below, please create scenes where a funny scenario is being depicted.
+						</p>
+						<p>
+						Please follow the <b style="color:red;">instructions</b> carefully, otherwise your work <b style="color:red">WILL BE REJECTED</b>.
+                        <br/>
+                        1. While funny, make your scenarios <b>realistic</b> and <b>meaningful</b> (e.g., the scene should <b>not</b> contain a <b>random assortment </b> of clipart pieces). <br>
+                        2. <b>Other people</b> should also find your scenario funny (e.g., no inside jokes). <br />
+                        3. Please use <b>at least <span id="minNumClipart">2 pieces</span></b> of clipart in the scene.<br />
+                        4. If you do multiple HITs, please be sure to create very <b>different scenarios</b> across HITs and not minor variations of a previously created scenario.<br />
+                        5. Give us a <b>description</b> of why you think the scenario is funny. Once you create a scene and click next, you will be asked to provide a <b>description</b> of what about the scenario is funny. <br />
+                        </p>
+                        <div style="/* border-style: solid; border-color: white;*/ background-color: white; color: black; margin-bottom: 5px;">
+							<span><font size="4"><b>Below are examples of bad scenarios that are either not realistic or not funny:</b></font></span>
+								<table align="center" style="background-color:white;">
+									<tr>
+										<td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/3TOK3KHVJTIMH49FNC65UP66PR0O7M_00.png' width=218></td>
+										<td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/34Q075JO1XDN312UWBNL3EJBO1210S_00.png' width=218></td>
+										<td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/3E337GFOL98NSCK4F0AMLDJUYJXGNJ_01.png' width=218></td>
+										<td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/39KFRKBFINV5WO5GALW572Q3TQHYO5_00.png' width=218></td>
+										<td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/3LWJHTCVCCM2H911K8WL7MEN2G9QF8_00.png' width=218></td>
+									</tr>
+								</table>
+						</div>
+						<p>Clipart objects (5 instances each) may be added by dragging them onto the scene and removed by dragging them off.
+                        They may be <b style="color:blue;">resized (CTRL + a/CTRL + z), 
+                        flipped (CTRL + c), sent backward (CTRL + s) or brought forward (CTRL + x)</b>.
+                        </p>
+                        <p>
+                        <!-- TODO Make number of scenes this dynamically update -->
+                        You will be asked to complete 2 <b>different/independent</b> scenarios.
+                        You can go back and forth between all of your scenarios by pressing "Prev" and "Next".
+                        When you finish your last one, a pop-up will ask you to submit the HIT.
+                        </p>
+                    </p>
+                    <div class="noSelect" style="padding-top:10px; padding-bottom:10px">Thanks for your work!</div>
+                </div>
+            </div>
+        
+            <div class="noSelect" align=left id="top_bar" style="background-color:lightblue">
+                <span id="counter" class="topBar noSelect" style="color:black;">Scenario</span>
+                
+                <div class="buttonHolder noSelect" style="display:inline-block; padding-bottom:5px; padding-top:5px; padding-left:414px">
+                    <input id="prevButton" type="button" name="Prev" value="Prev">
+                    <input id="nextButton" type="button" name="Next" value="Next">
+                </div>
+            </div>
+		<!--<p> Please describe why your scene is funny : 
+                <input id="description" type="text" placeholder="This scene is funny because ..." onchange="get_descrption(this.value)" style="width:300px">	
+                </p>
+		-->
+        </div>
+        
+<!--         Dialog box for any messages (e.g., answer doesn't meet requirements) that come up. -->
+        <div id="dialog-modal" title="Message"></div>
+
+<!--         Dialog box that pops up to allow users to submit the HIT. -->
+        <div id="dialog-confirm" style="display:none" title="Submit the HIT?">
+            <div>Comments are welcome!</div>
+            <textarea type="hidden" id="hit_comment" name="hit_comment" style="resize:none; height:65%; width:95%"></textarea>
+        </div>
+        
+		<!--         Dialog box that pops up to get descriptions of why the scene is funny. -->
+        <div id="dialog-description" style="display:none" title="Scene Description">
+            <div>Please describe why the scenario is funny!</div>
+            <textarea type="hidden" id="scene_description" name="scene_description" style="resize:none; height:100%; width:150%"></textarea>
+        </div>
+		
+<!--         The canvas to draw the clipart interface on. Do not remove. -->
+        <div style="text-align:left;" class="xlink">
+            <canvas id="scene_canvas" width=1120 height=730></canvas>
+        </div>
+        
+<!--         The form to keep track of the AMT data. Do not remove. -->
+        <form id='mturk_form' action="MTURK_FORM_TO_SUBMIT" method="POST">
+            <input type="hidden" id="assignmentId" name="assignmentId" value='MTURK_ASSIGNMENT_ID'>
+            <input type="hidden" id="workerId" name="workerId" value='MTURK_WORKER_ID'>
+            <input type="hidden" id="hitDuration" name="hitDuration" value='HIT_DURATION'>
+            <input type="hidden" id="hitResult" name="hitResult" value='HIT_RESULT'>
+            <input type="hidden" id="hitComment" name="hitComment" value='HIT_COMMENT'>
+        </form>
+
+        <script>
+             function update_instructions(curDescription) {
+                document.getElementById('counter').innerHTML = 
+                        "Scene " + (curScene+1) + "/" + numScene;
+                
+                document.getElementById('minNumClipart').innerHTML = 
+                        minNumObj + " piece" + ( (minNumObj==1) ? "" : "s");
+                
+<!--    document.getElementById('maxNumClipart').innerHTML = maxNumObj + " piece" + ( (maxNumObj==1) ? "" : "s"); -->
+            }
+            
+            update_instructions();
+        </script>
+        <!--Some code to extract HIT information from the URL and set the form accordingly.
+        This shouldn't need to be changed.-->
+        <script type="text/javascript">
+            hitID = gup('hitId');
+            assignmentID = gup('assignmentId');
+            workerID = gup('workerId');
+            
+            document.getElementById('assignmentId').value = assignmentID;
+            document.getElementById('workerId').value = workerID;
+            
+            // Used in main to decide to submit form or not (i.e., not loaded via AMT).
+            var submitAction; 
+            var form = document.getElementById('mturk_form');
+            
+            // Gets whether it is sandbox or real AMT (or nothing)
+            var service = decode(gup('turkSubmitTo'));
+            
+            if (service.length > 0) {
+                submitAction = true;
+                form.action = service + '/mturk/externalSubmit';
+            } else {
+                submitAction = false;
+                form.action = '';
+            }
+            
+            if (assignmentID == "ASSIGNMENT_ID_NOT_AVAILABLE") {
+                // If we're previewing, disable the button and give it a helpful message
+                $('#prevButton').attr("disabled","disabled");
+                $('#nextButton').attr("disabled","disabled");
+                $('#prevButton').attr("value", "You must ACCEPT the HIT before you can start the real task.");
+            } else {
+                $('#nextButton').bind('click', function() {next();});
+                $('#prevButton').bind('click', function() {prev();});
+            }
+
+            // So users can't drag the top bar if selected
+//             $('.noSelect').disableSelection();
+            
+            $("#dialog-modal").dialog({
+                autoOpen: false,
+                height: 250,
+                modal: true,
+                buttons: {
+                    'OK':function() {
+                        $( this ).dialog( "close" );
+                    },
+                }
+            });
+            
+            add_dialog();
+            $("#dialog-modal" ).hide();
+            
+            // ===========================================================
+            // add dialog for the website
+            // ===========================================================
+            function add_dialog() {
+                $("#dialog-confirm").dialog({
+                    autoOpen: false,
+                    resizable: true,
+                    height:240,
+                    modal: true,
+                    buttons: {
+                        "Yes": function() {
+                            $(this).dialog("close");
+                            submit_form();
+                        },
+                        Cancel: function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                $(".ui-dialog").css('position', 'absolute');
+            }
+                      
+            // ===========================================================
+            // add dialog for the website (like minimum requirements)
+            // ===========================================================
+            function render_dialog(errorMsg) {
+                if ( errorMsg == "expression" ) {
+                    var text = "Please pick facial expressions for people. Thanks!";
+                } else if (errorMsg == "minClipart") {
+                    var text = "Please use at least " + 
+                                minNumObj + " piece" + ((minNumObj ==1) ? "" : "s") + 
+                                " of clipart. Thanks!";
+                }  else if (errorMsg == "minType") {
+                    var text = "Please use at least " + 
+                                minPerCatType + " piece" + ((minPerCatType==1) ? "" : "s") + 
+                                " of clipart from each type. Thanks!";
+                } else if (errorMsg == "shortDescription") {
+                    var text = "Please give a longer description. Thanks!";
+                }
+                
+                $("#dialog-modal").text(text);
+                $("#dialog-modal").dialog('open');
+            }
+
+			// ===========================================================
+            // add dialog for getting image description
+            // ===========================================================
+            function add_description_dialog() {
+                $("#dialog-description").dialog({
+                    autoOpen: false,
+                    resizable: false,
+                    height:'auto', //240,
+					width:1000,
+                    modal: true,
+                    buttons: {
+                        "Next": function() {
+						    // get_description computes whether description is valid (1) else (0)
+							if (get_description()) {
+							$(this).find('textarea').val(''); // clear textarea on dialog close
+                            $(this).dialog("close");
+							}
+                        },
+                        Cancel: function() { //remembers value entered previously
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                $(".ui-dialog").css('position', 'absolute');				
+            }
+			
+            add_description_dialog();
+            // ===========================================================
+            // disable paste on input text // More as reference for future use
+            // ===========================================================
+            $(document).ready(function() {
+                $(document).on("paste","#dialog-confirm", function(e) {
+                    e.preventDefault();
+                });
+            });
+        </script>
+        
+        <!--Contains the clipart interface. 
+        Shouldn't need to be changed much.-->
+        <script src="../abstract_scenes_v002/site/abstract_scenes_v002_main.js"></script>
+                
+        <script> $(window).load(init())</script>;
+        
+    </body>
+</html>
