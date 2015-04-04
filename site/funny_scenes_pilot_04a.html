@@ -38,17 +38,21 @@
         
         <!--The "head" JS extracts information from the URL that is going to be needed
         to set up the HIT early. (This gets loaded before the body.)-->
-        <script src="./funny_scenes_head.js"></script>
+        <script src="./abstract_scenes_v002_head.js"></script>
     </head>
     <body class="noSelect">
     
         <div class="noSelect" align="left">
             <h2 style="color:black; margin:0 0 0 0;">Depict Funny Scenarios!
+                <span id="titleScene"></span>
             </h2>
         </div>
     
         <div class="noSelect" align="left" style="width: 1120px; padding-left: 0px; margin: 0;">
             <br/>
+            <!--<div class="buttonHolder noSelect" style="margin: 0; padding-bottom: 5px;">
+                <input type='button' value='Hide Instructions' onclick='hideExamples();' id='exToggle'>
+            </div> -->
 
             <div class="noSelect" id='examples'>
                 <div class="noSelect" id='instructions' align="left" style="color:black;">
@@ -68,16 +72,16 @@
                         5. Give us a <b>description</b> of why you think the scenario is funny. Once you create a scene and click next, you will be asked to provide a <b>description</b> of what about the scenario is funny. <br />
                         </p>
                         <div style="/* border-style: solid; border-color: white;*/ background-color: white; color: black; margin-bottom: 5px;">
-							<span><font size="4"><b>Below are examples of bad scenarios that are either not realistic or not funny:</b></font></span>
+							<span><font size="4"><b>Below are examples of <b style="color:red">bad scenarios</b> that are either not realistic or not funny:</b></font></span>
 								<table align="center" style="background-color:white;">
 									<tr>
-										<td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/3TOK3KHVJTIMH49FNC65UP66PR0O7M_00.png' width=218></td>
-										<td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/34Q075JO1XDN312UWBNL3EJBO1210S_00.png' width=218></td>
-										<td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/3E337GFOL98NSCK4F0AMLDJUYJXGNJ_01.png' width=218></td>
-										<td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/39KFRKBFINV5WO5GALW572Q3TQHYO5_00.png' width=218></td>
-										<td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/3LWJHTCVCCM2H911K8WL7MEN2G9QF8_00.png' width=218></td>
+										<td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/3TOK3KHVJTIMH49FNC65UP66PR0O7M_00.png' width=300 height=220></td>
+										<td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/34Q075JO1XDN312UWBNL3EJBO1210S_00.png' width=300 height=220></td>
+										<!-- <td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/3E337GFOL98NSCK4F0AMLDJUYJXGNJ_01.png' width=218></td> -->
+										<td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/39KFRKBFINV5WO5GALW572Q3TQHYO5_00.png' width=300 height=220></td>
+										<td><img src='http://vision.ece.vt.edu/funny_scenes/data/output/amt_scene_collection/pilot_01/ills/3LWJHTCVCCM2H911K8WL7MEN2G9QF8_00.png' width=300 height=220></td>
 									</tr>
-								</table>
+								</table> 
 						</div>
 						<p>Clipart objects (5 instances each) may be added by dragging them onto the scene and removed by dragging them off.
                         They may be <b style="color:blue;">resized (CTRL + a/CTRL + z), 
@@ -85,12 +89,12 @@
                         </p>
                         <p>
                         <!-- TODO Make number of scenes this dynamically update -->
-                        You will be asked to complete 2 <b>different/independent</b> scenarios.
+                        You will be asked to complete <b><span id="numTotalScenes">3</span> tasks.</b><br>
                         You can go back and forth between all of your scenarios by pressing "Prev" and "Next".
-                        When you finish your last one, a pop-up will ask you to submit the HIT.
-                        </p>
+                        When you finish your last one, a pop-up will ask you to submit the HIT. We'd love to hear any feedback you have about the usability of the interface, any bugs you encounter, or the HIT in general, so feel free to leave a comment.<br>
+                        Thanks for your work!
+						</p>
                     </p>
-                    <div class="noSelect" style="padding-top:10px; padding-bottom:10px">Thanks for your work!</div>
                 </div>
             </div>
         
@@ -125,7 +129,7 @@
 		
 <!--         The canvas to draw the clipart interface on. Do not remove. -->
         <div style="text-align:left;" class="xlink">
-            <canvas id="scene_canvas" width=1120 height=730></canvas>
+            <canvas id="scene_canvas" width=1200 height=600></canvas>
         </div>
         
 <!--         The form to keep track of the AMT data. Do not remove. -->
@@ -138,15 +142,30 @@
         </form>
 
         <script>
-             function update_instructions(curDescription) {
+
+             function update_instructions() {
+                if (curSceneTypeBase == "Living") {
+                    titleStr = "(<b style='color:red;'>" + "Living/Dining Room" + "</b>)";
+                } else {
+                    if (curSceneTypeBase != undefined) {
+                        titleStr = "(<b style='color:red;'>" + curSceneTypeBase + "</b>)";
+                    } else {
+                        titleStr = "";
+                    }
+                }
+                document.getElementById('titleScene').innerHTML = titleStr; 
                 document.getElementById('counter').innerHTML = 
-                        "Scene " + (curScene+1) + "/" + numScene;
-                
-                document.getElementById('minNumClipart').innerHTML = 
-                        minNumObj + " piece" + ( (minNumObj==1) ? "" : "s");
-                
-<!--    document.getElementById('maxNumClipart').innerHTML = maxNumObj + " piece" + ( (maxNumObj==1) ? "" : "s"); -->
-            }
+                        "Scenario " + (curScene+1) + "/" + numScene;
+                document.getElementById('numTotalScenes').innerHTML = numScene; 
+                if (document.getElementById('minNumClipart') != undefined) {
+					document.getElementById('minNumClipart').innerHTML = 
+							minNumObj + " piece" + ( (minNumObj==1) ? "" : "s");
+					}
+                if (document.getElementById('maxNumClipart') != undefined) {
+                    document.getElementById('maxNumClipart').innerHTML = 
+                            maxNumObj + " piece" + ( (maxNumObj==1) ? "" : "s");
+                    }
+                }
             
             update_instructions();
         </script>
@@ -186,7 +205,7 @@
             }
 
             // So users can't drag the top bar if selected
-//             $('.noSelect').disableSelection();
+            $('.noSelect').disableSelection();
             
             $("#dialog-modal").dialog({
                 autoOpen: false,
@@ -198,7 +217,6 @@
                     },
                 }
             });
-            
             add_dialog();
             $("#dialog-modal" ).hide();
             
@@ -234,10 +252,20 @@
                     var text = "Please use at least " + 
                                 minNumObj + " piece" + ((minNumObj ==1) ? "" : "s") + 
                                 " of clipart. Thanks!";
-                }  else if (errorMsg == "minType") {
+                } else if (errorMsg == "maxClipart") {
+                    var text = "Please use at most " + 
+                                maxNumObj + " piece" + ((maxNumObj ==1) ? "" : "s") + 
+                                " of clipart. Thanks!";
+                } else if (errorMsg == "minType") {
                     var text = "Please use at least " + 
                                 minPerCatType + " piece" + ((minPerCatType==1) ? "" : "s") + 
                                 " of clipart from each type. Thanks!";
+                } else if (errorMsg == "loadedScene") {
+                    var text = "Please make at least " + 
+                                minJSONSceneChange + " change" + ((minJSONSceneChange==1) ? "" : "s") + 
+                                " to the original scenario. Thanks!";
+                } else if (errorMsg == "deformHuman") {
+                    var text = "Please change the limb positions of the people some more. Thanks!";
                 } else if (errorMsg == "shortDescription") {
                     var text = "Please give a longer description. Thanks!";
                 }
@@ -285,9 +313,9 @@
         
         <!--Contains the clipart interface. 
         Shouldn't need to be changed much.-->
-        <script src="../abstract_scenes_v002/site/abstract_scenes_v002_main.js"></script>
+        <script src="./funny_scenes_pilot04a_main.js"></script>
                 
-        <script> $(window).load(init())</script>;
+        <script> $(window).load(init())</script>
         
     </body>
 </html>

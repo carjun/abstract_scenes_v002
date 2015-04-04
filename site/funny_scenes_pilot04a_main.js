@@ -42,7 +42,8 @@ var curDepth0Used;
 var curDepth1Used;
 var curInitHistory;
 var curDeformTypesUse;
-
+// AC edit
+var curDescription="";
 // SA: TODO Clean-up these hacks to make viewing work okay
 var loadedObjectsAndBG = false;
 var firstInit = false;
@@ -296,6 +297,7 @@ function reset_scene() {
             curSceneTypeBase = extract_scene_type_base(curSceneType)
             curInitHistory = curSceneData.initHistory;
             curDeformTypesUse = curSceneData.deformTypesUse;
+	    curDescription = curSceneData.description;
             
         } else { // Randomly or from previous JSON initialization
             
@@ -977,7 +979,7 @@ function prev() {
 
     // Store current scene before going to previous scene
     sceneData[curScene] = curSceneData;
-    
+	
     if (curScene > 0) {
         curScene -= 1;
     }
@@ -990,14 +992,23 @@ function prev() {
 
 }
 
-// Grab the results and go to next task/submit
+// grab the results and go to next task/submit
 function next() {
-
     // Make sure scene meets requirements
     if (!validate_scene()) {
         return -1;
-    }
-    
+    } 
+	else	{
+		// if scene is valid, then we get description
+		$("#dialog-description").find('textarea').val(curDescription);
+		$("#dialog-description").dialog("open");
+		$("#dialog-description").css('overflow', 'hidden'); // hide scrollbar
+		// if description is valid, then get_description() function calls goto_next_scene()
+	}
+}
+
+// Called by description dialog box once we have a valid description
+function goto_next_scene() {
     sceneData[curScene] = curSceneData;
     curScene++;
 
@@ -1006,7 +1017,7 @@ function next() {
         $("#dialog-confirm").dialog('open');
         // Put cursor in comment box for convenience :)
         $("#hit_comment").each( function(idx) { 
-            if (idx == 0) {
+            if ( idx == 0 ) {
                 $(this).focus();
             }
         });
@@ -1015,8 +1026,30 @@ function next() {
         curSceneData = sceneData[curScene];
         log_user_data("next"); // SA: TODO Add?
         reset_scene();
-        draw_canvas();
+        draw_canvas();				
     }
+}
+
+// Called when "Next" is hit in description dialog box
+function get_description() {
+  $('#dialog-description textarea').each( function() { curDescription = this.value; });
+  //curDescription = $("#description").val(); 
+  
+    var descriptionWordLength = (curDescription.trim()).split(/\s+\b/).length
+	
+	// curDescription has to exist since call chain is :
+	// get_description() <= hit "next" in dialog <= openDialog <= next() <= Hitting next button
+	curSceneData.description = curDescription; 
+	//curDescription = "";
+    //alert(descriptonWordLength);
+    if (descriptionWordLength < 5) {
+      render_dialog("shortDescription");
+	  return 0;	// do not close dialog
+	   }
+    else {
+		goto_next_scene();
+		return 1;
+	}
 }
 
 function num_differences_instance(originalInst, currentInst) {
@@ -1346,7 +1379,9 @@ function submit_form() {
                 sceneType: sceneData[i].sceneType,
                 initHistory: sceneData[i].initHistory,
                 deformTypesUse: sceneData[i].deformTypesUse,
-                sceneConfigFile: sceneData[i].sceneConfigFile
+                sceneConfigFile: sceneData[i].sceneConfigFile,
+		// Arjun's edit - add description of current scene
+                description: sceneData[i].description
             }
         );
     }

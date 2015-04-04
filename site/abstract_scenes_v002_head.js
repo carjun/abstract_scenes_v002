@@ -45,17 +45,19 @@
 //    sceneConfigFile specified in the sceneJSON data.
 
 // Location of the interface on server--not sure why you'd want this over relative
-var baseURL = "https://vision.ece.vt.edu/abstract_scenes_v002/site/";
+// var baseURL = "http://vision.ece.vt.edu/abstract_scenes_v002/site/";
 // Location of the interface -- Easiest to just make it current directory
 var baseURL = './'
 // Relative location of the image files for the interface
 var baseURLInterface = baseURL + "../site_pngs/";
 // Use web data location of image files if you don't want to download them locally
-// baseURLInterface = "https://vision.ece.vt.edu/abstract_scenes_v002/site_pngs/";
+//baseURLInterface = "http://vision.ece.vt.edu/abstract_scenes_v002/site_pngs/";
 // Location of interface configuration files
 var dataURL = baseURL + "../site_data/";
 // Location of some demo scenes to load
-var sceneJSONURL = baseURL + "../scenes/json/";
+//var sceneJSONURL = baseURL + "../scenes/json/";
+var sceneJSONURL = baseURL + "../site_data/initialize/";
+
 
 // Changing this will affect the non-JSON demo
 var AVAIL_SCENE_TYPES = ["Living-All", "Park-All"];

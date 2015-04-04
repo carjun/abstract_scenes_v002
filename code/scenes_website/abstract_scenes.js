@@ -150,10 +150,10 @@ if (datasetIdxStr != "") {
 
 var base_data_path;
 //base_data_path = 'https://vision.ece.vt.edu/abstract_scenes_v002/data/output/';
-base_data_path = ['../../data/output/'];
-var exp_names_title = ['Abstract Scenes V2'];
+base_data_path = ['../rendered_scenes/'];
+var exp_names_title = ['Funny scenes pilot 03'];
 var exp_names_internal = ['amt_simple_launch_demo'];
-var dataset_names = ['pilot_01'];
+var dataset_names = ['pilot_03'];
 
 baseDataPathStr = decode(gup("baseDataPath"));
 if (baseDataPathStr != '') {
@@ -179,7 +179,8 @@ img_paths = []
 data_filenames = []
 
 exp_names_internal.forEach( function(name, idxExp) {
-    var img_path = base_data_path[idxExp] + name + '/' + dataset_names[idxExp] + '/ills/';
+    //var img_path = base_data_path[idxExp] + name + '/' + dataset_names[idxExp] + '/ills/';
+	var img_path = base_data_path[idxExp] + name  
     var data_file = base_data_path[idxExp] + name + '/' + dataset_names[idxExp] + 
                     '/json/' + dataset_names[idxExp] + '_noSceneData.min.json';
     img_paths.push(img_path);

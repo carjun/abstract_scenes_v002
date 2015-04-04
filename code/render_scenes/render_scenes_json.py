@@ -44,13 +44,13 @@ class RenderScenes(object):
 
         if (self.opts['--site_pngs_dir'] == 'USE_DEF'):
             #base_url_interface = os.path.join('..', '..', 'interface')
-            base_url_interface = '/srv/share/abstract_scenes_v002/site_pngs/'
+            base_url_interface = '../../site_pngs/'
         else:
             base_url_interface = self.opts['--site_pngs_dir']
             
         if (self.opts['--config_dir'] == 'USE_DEF'):
             #config_folder = dir_path(os.path.join('..', '..', 'data'))
-            config_folder = '/srv/share/abstract_scenes_v002/site_data/'
+            config_folder = '../../site_data/'
         else:
             config_folder = self.opts['--config_dir']
 
